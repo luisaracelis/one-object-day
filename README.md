@@ -1,5 +1,10 @@
 # One Object Day
 
-A small, static visual journal about one object and the light around it. Issue 01 is locked by-the-window: the same cup observed across four moments of the day.
+A small, static visual journal about one object and the light around it.
 
-Open `index.html` to view the four-part issue, or `01/index.html` for the archive page.
+**Latest — Issue 02:** a whole lemon on the sill, observed across four hours (dawn · mid-morning · afternoon · dusk). Live at https://one-object-day.vercel.app.
+
+- Home (`index.html`) = current issue (02)
+- Archive: `/01/` (cup), `/02/` (lemon)
+
+Open `index.html` to view the four-part issue.

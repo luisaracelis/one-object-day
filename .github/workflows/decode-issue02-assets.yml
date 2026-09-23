@@ -1,0 +1,41 @@
+name: Decode Issue 02 assets
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/*.b64'
+      - '.github/workflows/decode-issue02-assets.yml'
+permissions:
+  contents: write
+jobs:
+  decode:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode base64 sidecars to JPEGs
+        run: |
+          set -euo pipefail
+          found=0
+          while IFS= read -r -d '' f; do
+            out="${f%.b64}"
+            base64 -d "$f" > "$out"
+            rm -f "$f"
+            echo "decoded $out ($(wc -c < "$out") bytes)"
+            found=1
+          done < <(find . -name '*.b64' -print0)
+          if [ "$found" -eq 0 ]; then
+            echo "No .b64 files; nothing to do"
+            exit 0
+          fi
+      - name: Commit decoded JPEGs
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "Issue 02: decode lemon JPEGs from sidecars"
+          git push
