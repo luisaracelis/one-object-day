@@ -2,9 +2,8 @@
 
 A small, static visual journal about one object and the light around it.
 
-**Latest — Issue 02:** a whole lemon on the sill, observed across four hours (dawn · mid-morning · afternoon · dusk). Live at https://one-object-day.vercel.app.
+- Issue 01 — speckled cream cup by the window
+- Issue 02 — whole lemon on the sill
+- Issue 03 (home) — clear glass of water on a dark oak table; patio-door light
 
-- Home (`index.html`) = current issue (02)
-- Archive: `/01/` (cup), `/02/` (lemon)
-
-Open `index.html` to view the four-part issue.
+Open `index.html` for the latest issue, or `/01/` `/02/` `/03/` for archives.
