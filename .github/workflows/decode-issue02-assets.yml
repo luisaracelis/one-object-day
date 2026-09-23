@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '**/*.b64'
+      - '**/*.b64.part*'
       - '.github/workflows/decode-issue02-assets.yml'
 permissions:
   contents: write
@@ -12,9 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode base64 sidecars to JPEGs
+      - name: Assemble and decode base64 sidecars
         run: |
           set -euo pipefail
+          # Assemble split parts into .b64 files
+          for manifest in $(find . -name '*.b64.parts' | sort); do
+            dir=$(dirname "$manifest")
+            base=$(basename "$manifest" .parts)
+            : > "$dir/$base"
+            while IFS= read -r part; do
+              [ -n "$part" ] || continue
+              cat "$dir/$part" >> "$dir/$base"
+              rm -f "$dir/$part"
+            done < "$manifest"
+            rm -f "$manifest"
+            echo "assembled $dir/$base"
+          done
           found=0
           while IFS= read -r -d '' f; do
             out="${f%.b64}"
